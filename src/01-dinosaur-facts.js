@@ -32,11 +32,11 @@ function getLongestDinosaur(dinosaurs) {
     for (let i=0; i < dinosaurs.length; i++)
       copyOfDinoSaurs.push(dinosaurs[i]);
 
-  let longestDinosaur = copyOfDinoSaurs.sort((a,b) => (b.lengthInMeters-a.lengthInMeters))[0];
+  let longestDinosaur = copyOfDinoSaurs.sort((a,b) => (b.lengthInMeters-a.lengthInMeters))[0]; // i used a higher order array method to find the max
   
- // let obj = {};
+  let obj = {};
 
-  let obj[longestDinosaur.name] = longestDinosaur.lengthInMeters*3.281;
+   obj[longestDinosaur.name] = longestDinosaur.lengthInMeters*3.281;
 
   return obj;
 
@@ -64,7 +64,7 @@ function getLongestDinosaur(dinosaurs) {
  */
 function getDinosaurDescription(dinosaurs, id) {
 
-  let obj = dinosaurs.find(dino => (dino.dinosaurId == id));
+  let obj = dinosaurs.find(dino => (dino.dinosaurId == id)); // used find array method, returns 'undefined' if not found
 
       if (!obj)
         return `A dinosaur with an ID of \'${id}\' cannot be found\.`;
