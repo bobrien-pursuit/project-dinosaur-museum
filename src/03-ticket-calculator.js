@@ -139,6 +139,8 @@ else
     purchaseTickets(tickets, purchases);
     //> "Ticket type 'discount' cannot be found."
  */
+
+  
 function purchaseTickets(ticketData, purchases) {
 
 
@@ -152,12 +154,12 @@ let total = 0; // total cost for entrance
     extras = purchases[i].extras;
 
        let extrasDescription = []; // extras description
- 
+
  if(entrantType.toLowerCase() === 'adult'){
     let extrasSubtotal = 0;
     for (let j = 0; j < extras.length; j++) // validates the names of the extras and then accumulates their subtotal
       if (extras[j].toLowerCase() === 'movie' || extras[j].toLowerCase() === 'terrace' || extras[j].toLowerCase() === 'education'){
-       extrasSubtotal += ticketData.extras[extras[j]].priceInCents[entrantType];
+       extrasSubtotal += ticketData.extras[extras[j]].priceInCents[entrantType]; // finds subtotals for the extras
        extrasDescription.push(ticketData.extras[extras[j]].description); // grabs each extras description and pushes it into an array
       }
     else 
