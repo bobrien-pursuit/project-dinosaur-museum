@@ -226,7 +226,7 @@ else
     return `Entrant type \'${entrantType}\' cannot be found.`
   
   }
-      receipt.push(`-------------------------------------------\nTOTAL: \$${total/100}\.00`); //last line of receipt with the running total. 
+      receipt.push(`-------------------------------------------\nTOTAL: \$${total/100}\.00`); //receipt footer with running total. 
 
   return receipt.join('\n'); // uses join to make the receipt from the array. 
 }
