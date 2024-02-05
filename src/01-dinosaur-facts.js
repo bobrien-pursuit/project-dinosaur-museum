@@ -103,15 +103,16 @@ function getDinosaursAliveMya(dinosaurs, mya, key) {
  
   let result = [];
 
-  dinosaurs.filter((dinos) => {
+  // I used both filter and for each together here
+  dinosaurs.filter((dinos) => { // filters out the dinosaurs that lived within the specified millions of years
     
-   if (dinos.mya.length ==  1 && (dinos.mya[0] === mya || dinos.mya[0] - 1 === mya))
+   if (dinos.mya.length ==  1 && (dinos.mya[0] === mya || dinos.mya[0] - 1 === mya)) // if there's only one mya it will look for one less as well
           return dinos;
-   else if (mya <= dinos.mya[0] && mya >= dinos.mya[1])
+   else if (mya <= dinos.mya[0] && mya >= dinos.mya[1]) // if there are two in the array it will look for dinos within the range
           return dinos;
   
   })      
-           .forEach(dino => {
+           .forEach(dino => { // for each element within the range it will push either the ky or the id of the dino to the result array
             
     if(dino.hasOwnProperty(key))
        result.push(dino[key]);
