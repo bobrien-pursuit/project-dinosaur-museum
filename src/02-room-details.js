@@ -25,16 +25,16 @@ const exampleRoomData = require("../data/rooms");
  *  getRoomByDinosaurName(dinosaurs, rooms, "Pterodactyl");
  *  //> "Dinosaur with name 'Pterodactyl' cannot be found."
  */
-function getRoomByDinosaurName(dinosaurs, rooms, dinosaurName) {
+function getRoomByDinosaurName(dinosaurs, rooms, dinosaurName) { 
 
-  let dino = dinosaurs.find((dinosaur) => dinosaur.name == dinosaurName);
+  let dino = dinosaurs.find((dinosaur) => dinosaur.name == dinosaurName); //finds the dinosaur by dinosaurName
   
-  if (!dino)
+  if (!dino) // if it's undefined it will return an error message.
   return `Dinosaur with name \'${dinosaurName}\' cannot be found.`
 
-  let dinoRoom = rooms.find((room) => room.dinosaurs.includes(dino.dinosaurId));
+  let dinoRoom = rooms.find((room) => room.dinosaurs.includes(dino.dinosaurId)); // finds the room based off of dinosaurId and sets that object to dinoRoom variable
   
-  if (!dinoRoom)
+  if (!dinoRoom) // if room doesn't exist it returns an error 
   return `Dinosaur with name \'${dinosaurName}\' cannot be found in any rooms.`
   
   return dinoRoom.name;
@@ -64,26 +64,26 @@ function getRoomByDinosaurName(dinosaurs, rooms, dinosaurName) {
  */
 function getConnectedRoomNamesById(rooms, id) {
 let roomArr = [];
-let connectedRoomsExists = true;
+let connectedRoomsExists = true; // if room is not in the list of roomids this will be falsae
 let roomIDs = [];
 let incorrectID = '';
 
-for (let i = 0; i < rooms.length; i++)
+for (let i = 0; i < rooms.length; i++) // stores all of the ids of all of the rooms
   roomIDs.push(rooms[i].roomId);
 
 for (let i = 0; i < rooms.length; i++)
   for (let j = 0; j < rooms[i].connectsTo.length; j++){
     if (!roomIDs.includes(rooms[i].connectsTo[j])){
-      incorrectID = rooms[i].connectsTo[j];
-      connectedRoomsExists = false;
+      incorrectID = rooms[i].connectsTo[j]; // saves the name of the incorrectID
+      connectedRoomsExists = false; // updates the flag to false
   }
 }
 
-if (connectedRoomsExists == false)
+if (connectedRoomsExists == false) // checks if the connected rooms exist
   return `Room with ID of '${incorrectID}' could not be found.`;
-else if(!rooms.find(room => room.roomId === id))
+else if(!rooms.find(room => room.roomId === id)) // checks if the room we're seraching for doesn't exist
   return `Room with ID of '${id}' could not be found.`;
-else {
+else { // gets all of the connected rooms by id
 for (let i = 0; i < rooms.length; i++)
   if(rooms[i].roomId == id)
    for (let j = 0; j < rooms[i].connectsTo.length; j++)
@@ -92,7 +92,7 @@ for (let i = 0; i < rooms.length; i++)
     continue;
 }
 
-if (roomArr){
+if (roomArr){ // updates the roomArr array to the room names 
 for (let i = 0; i < rooms.length; i++)
   for (let j = 0; j < roomArr.length; j++)
     if (roomArr[j] == rooms[i].roomId)
