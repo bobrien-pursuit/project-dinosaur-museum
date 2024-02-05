@@ -22,7 +22,24 @@ const exampleDinosaurData = require("../data/dinosaurs");
  *  getLongestDinosaur(dinosaurs);
  *  //> { Brachiosaurus: 98.43 }
  */
-function getLongestDinosaur(dinosaurs) {}
+function getLongestDinosaur(dinosaurs) {
+
+  let copyOfDinoSaurs = [];
+
+  if (dinosaurs.length === 0)
+    return {};
+
+    for (let i=0; i < dinosaurs.length; i++)
+      copyOfDinoSaurs.push(dinosaurs[i]);
+
+  let longestDinosaur = copyOfDinoSaurs.sort((a,b) => (b.lengthInMeters-a.lengthInMeters))[0];
+  
+  let obj = {};
+
+  obj[longestDinosaur.name] = longestDinosaur.lengthInMeters*3.281;
+  return obj;
+
+ }
 
 /**
  * getDinosaurDescription()
@@ -44,20 +61,30 @@ function getLongestDinosaur(dinosaurs) {}
  *  getDinosaurDescription(dinosaurs, "incorrect-id");
  *  //> "A dinosaur with an ID of 'incorrect-id' cannot be found."
  */
-function getDinosaurDescription(dinosaurs, id) {}
+function getDinosaurDescription(dinosaurs, id) {
+
+  let obj = dinosaurs.find(dino => (dino.dinosaurId == id));
+
+      if (!obj)
+        return `A dinosaur with an ID of \'${id}\' cannot be found\.`;
+      
+      return `${obj.name} \(${obj.pronunciation}\)\n${obj.info} It lived in the ${obj.period} period, over ${obj.mya[obj.mya.length-1]} million years ago.`;
+
+}
+
 
 /**
  * getDinosaursAliveMya()
  * ---------------------
  * Returns an array of dinosaurs who were alive at the given `mya` (i.e. "millions of years ago") value. If a `key` is provided, returns the value of that key for each dinosaur alive at that time. Otherwise, returns the ID.
  *
- * If the dinosaur only has a single value for `mya`, allows for the `mya` value to be equal to the given value or one less. For example, if a dinosaur has a `mya` value of `[29]`, the dinosaur's information will be returned if `29` is entered or `28` is entered.
+ * If the dinosaur only has a single value for `mya`, allows for the `mya` value to be equal to the given value or os. For example, if a dinosaur has a `mya` value of `[29]`, the dinosaur's information will be returned if `29` is entered or `28` is entered.
  *
  * @param {Object[]} dinosaurs - An array of dinosaur objects. See the `data/dinosaurs.js` file for an example of the input.
  * @param {number} mya - "Millions of years ago."
  * @param {string} key - An optional parameter. If included, for dinosaurs that lived during the `mya` value given, will return the value of the supplied key. Otherwise, returns the ID.
  * @returns {*[]} An array of values, which depend on the key given. The array should only include data of dinosaurs who lived during the given time period.
- *
+ *ne les
  * EXAMPLE:
  *  getDinosaursAliveMya(dinosaurs, 150);
  *  //> ["YLtkN9R37", "GGvO1X9Zeh", "BFjjLjea-O", "V53DvdhV2A"]
@@ -71,7 +98,28 @@ function getDinosaurDescription(dinosaurs, id) {}
  *  getDinosaursAliveMya(dinosaurs, 65, "unknown-key");
  *  //> ["WHQcpcOj0G"]
  */
-function getDinosaursAliveMya(dinosaurs, mya, key) {}
+function getDinosaursAliveMya(dinosaurs, mya, key) {
+ 
+  let result = [];
+
+  dinosaurs.filter((dinos) => {
+    
+   if (dinos.mya.length ==  1 && (dinos.mya[0] === mya || dinos.mya[0] - 1 === mya))
+          return dinos;
+   else if (mya <= dinos.mya[0] && mya >= dinos.mya[1])
+          return dinos;
+  
+  })      
+           .forEach(dino => {
+            
+    if(dino.hasOwnProperty(key))
+       result.push(dino[key]);
+    else
+      result.push(dino.dinosaurId);
+ });
+
+ return result;
+}
 
 module.exports = {
   getLongestDinosaur,

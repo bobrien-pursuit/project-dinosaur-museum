@@ -25,7 +25,20 @@ const exampleRoomData = require("../data/rooms");
  *  getRoomByDinosaurName(dinosaurs, rooms, "Pterodactyl");
  *  //> "Dinosaur with name 'Pterodactyl' cannot be found."
  */
-function getRoomByDinosaurName(dinosaurs, rooms, dinosaurName) {}
+function getRoomByDinosaurName(dinosaurs, rooms, dinosaurName) {
+
+  let dino = dinosaurs.find((dinosaur) => dinosaur.name == dinosaurName);
+  
+  if (!dino)
+  return `Dinosaur with name \'${dinosaurName}\' cannot be found.`
+
+  let dinoRoom = rooms.find((room) => room.dinosaurs.includes(dino.dinosaurId));
+  
+  if (!dinoRoom)
+  return `Dinosaur with name \'${dinosaurName}\' cannot be found in any rooms.`
+  
+  return dinoRoom.name;
+}
 
 /**
  * getConnectedRoomNamesById()
@@ -49,9 +62,51 @@ function getRoomByDinosaurName(dinosaurs, rooms, dinosaurName) {}
       "Kit Hopkins Education Wing"
     ]
  */
-function getConnectedRoomNamesById(rooms, id) {}
+function getConnectedRoomNamesById(rooms, id) {
+let roomArr = [];
+let connectedRoomsExists = true;
+let roomIDs = [];
+let incorrectID = '';
+
+for (let i = 0; i < rooms.length; i++)
+  roomIDs.push(rooms[i].roomId);
+
+for (let i = 0; i < rooms.length; i++)
+  for (let j = 0; j < rooms[i].connectsTo.length; j++){
+    if (!roomIDs.includes(rooms[i].connectsTo[j])){
+      incorrectID = rooms[i].connectsTo[j];
+      connectedRoomsExists = false;
+  }
+}
+
+if (connectedRoomsExists == false)
+  return `Room with ID of '${incorrectID}' could not be found.`;
+else if(!rooms.find(room => room.roomId === id))
+  return `Room with ID of '${id}' could not be found.`;
+else {
+for (let i = 0; i < rooms.length; i++)
+  if(rooms[i].roomId == id)
+   for (let j = 0; j < rooms[i].connectsTo.length; j++)
+          roomArr[j] = rooms[i].connectsTo[j];
+  else
+    continue;
+}
+
+if (roomArr){
+for (let i = 0; i < rooms.length; i++)
+  for (let j = 0; j < roomArr.length; j++)
+    if (roomArr[j] == rooms[i].roomId)
+        roomArr[j] = rooms[i].name;
+}
+
+return roomArr;
+
+}
+
 
 module.exports = {
   getRoomByDinosaurName,
   getConnectedRoomNamesById,
 };
+
+ // console.log(getConnectedRoomNamesById(exampleRoomData, 'incorrect-id'));
