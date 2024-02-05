@@ -34,9 +34,10 @@ function getLongestDinosaur(dinosaurs) {
 
   let longestDinosaur = copyOfDinoSaurs.sort((a,b) => (b.lengthInMeters-a.lengthInMeters))[0];
   
-  let obj = {};
+ // let obj = {};
 
-  obj[longestDinosaur.name] = longestDinosaur.lengthInMeters*3.281;
+  let obj[longestDinosaur.name] = longestDinosaur.lengthInMeters*3.281;
+
   return obj;
 
  }

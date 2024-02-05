@@ -141,7 +141,7 @@ function purchaseTickets(ticketData, purchases) {
 
 
 let receipt = [`Thank you for visiting the Dinosaur Museum!`, `-------------------------------------------`]
- let total = 0;
+let total = 0;
 
   for (let i = 0; i < purchases.length; i++){
     ticketType = purchases[i].ticketType;
