@@ -56,25 +56,28 @@ const exampleTicketData = require("../data/tickets");
  */
 function calculateTicketPrice(ticketData, ticketInfo) {
 
+// uses destructuring to get the ticketType from the object if the key is incorrect it returns an error. 
 if (ticketInfo.ticketType.toLowerCase() === 'general' || ticketInfo.ticketType.toLowerCase() === 'membership')
      ticketType = ticketInfo.ticketType;
 else 
   return `Ticket type \'${ticketInfo.ticketType}\' cannot be found.`;
  
-  
+// uses destructuring to get the ticketType from the object if the key is incorrect it returns an error. 
 if (ticketInfo.entrantType.toLowerCase() === "child" || ticketInfo.entrantType.toLowerCase() === "adult" || ticketInfo.entrantType === "senior")
     entrantType = ticketInfo.entrantType;
 else 
   return `Entrant type \'${ticketInfo.entrantType}\' cannot be found.`;
   
+  // uses destructuring to grab the array from the object
   extrasArr = ticketInfo.extras;
 
   let extrasPrice = 0;
   let totalPrice = 0;
 
   for (let i = 0; i < extrasArr.length; i++){
+    // checks the names of the extras
     if (extrasArr[i].toLowerCase() === 'movie' || extrasArr[i].toLowerCase() === 'education' || extrasArr[i].toLowerCase() === 'terrace')
-     extrasPrice += ticketData.extras[extrasArr[i]].priceInCents[entrantType];
+     extrasPrice += ticketData.extras[extrasArr[i]].priceInCents[entrantType]; // accumulates the total
   else
     return `Extra type \'${extrasArr[i]}\' cannot be found.`;
 }
@@ -140,22 +143,22 @@ function purchaseTickets(ticketData, purchases) {
 
 
 
-let receipt = [`Thank you for visiting the Dinosaur Museum!`, `-------------------------------------------`]
-let total = 0;
+let receipt = [`Thank you for visiting the Dinosaur Museum!`, `-------------------------------------------`] // receipt header
+let total = 0; // total cost for entrance
 
-  for (let i = 0; i < purchases.length; i++){
-    ticketType = purchases[i].ticketType;
+  for (let i = 0; i < purchases.length; i++){ // loops through the data
+    ticketType = purchases[i].ticketType; // uses destructuring to get the variables from inside each object in the array
     entrantType = purchases[i].entrantType;
     extras = purchases[i].extras;
 
-       let extrasDescription = [];
+       let extrasDescription = []; // extras description
  
- if(entrantType === 'adult'){
+ if(entrantType.toLowerCase() === 'adult'){
     let extrasSubtotal = 0;
-    for (let j = 0; j < extras.length; j++)
-      if (extras[j] === 'movie' || extras[j] === 'terrace' || extras[j] === 'education'){
+    for (let j = 0; j < extras.length; j++) // validates the names of the extras and then accumulates their subtotal
+      if (extras[j].toLowerCase() === 'movie' || extras[j].toLowerCase() === 'terrace' || extras[j].toLowerCase() === 'education'){
        extrasSubtotal += ticketData.extras[extras[j]].priceInCents[entrantType];
-       extrasDescription.push(ticketData.extras[extras[j]].description);
+       extrasDescription.push(ticketData.extras[extras[j]].description); // grabs each extras description and pushes it into an array
       }
     else 
       return `Extra type \'${extras[j]}\' cannot be found.`
@@ -165,17 +168,17 @@ let total = 0;
     else 
      return `Ticket type \'${ticketType}\' cannot be found.`
      
-    if (extrasDescription.length == 0)
-      receipt.push(`Adult ${ticketData[ticketType].description}\: \$${extrasSubtotal/100}\.00`);
-    else
+    if (extrasDescription.length == 0) // checks if there are any extras purchased
+      receipt.push(`Adult ${ticketData[ticketType].description}\: \$${extrasSubtotal/100}\.00`); // removes unncessary ()
+    else 
       receipt.push(`Adult ${ticketData[ticketType].description}\: \$${extrasSubtotal/100}\.00 \(${extrasDescription.join(', ')}\)`);
 
-      total += extrasSubtotal;
+      total += extrasSubtotal; // updates total check
   }
-  else if(entrantType === 'child'){
+  else if(entrantType.toLowerCase() === 'child'){
     let extrasSubtotal = 0;
     for (let j = 0; j < extras.length; j++)
-    if (extras[j] === 'movie' || extras[j] === 'terrace' || extras[j] === 'education'){
+    if (extras[j].toLowerCase() === 'movie' || extras[j].toLowerCase() === 'terrace' || extras[j].toLowerCase() === 'education'){
      extrasSubtotal += ticketData.extras[extras[j]].priceInCents[entrantType];
      extrasDescription.push(ticketData.extras[extras[j]].description);
     }
@@ -194,10 +197,10 @@ let total = 0;
 
       total += extrasSubtotal;
   }
- else if (entrantType === 'senior'){
+ else if (entrantType.toLowerCase() === 'senior'){
     let extrasSubtotal = 0;
     for (let j = 0; j < extras.length; j++)
-    if (extras[j] === 'movie' || extras[j] === 'terrace' || extras[j] === 'education'){
+    if (extras[j].toLowerCase() === 'movie' || extras[j].toLowerCase() === 'terrace' || extras[j].toLowerCase() === 'education'){
        extrasSubtotal += ticketData.extras[extras[j]].priceInCents[entrantType];
        extrasDescription.push(ticketData.extras[extras[j]].description);
       }
@@ -221,9 +224,9 @@ else
     return `Entrant type \'${entrantType}\' cannot be found.`
   
   }
-      receipt.push(`-------------------------------------------\nTOTAL: \$${total/100}\.00`);
+      receipt.push(`-------------------------------------------\nTOTAL: \$${total/100}\.00`); //last line of receipt with the running total. 
 
-  return receipt.join('\n');
+  return receipt.join('\n'); // uses join to make the receipt from the array. 
 }
 
 // Do not change anything below this line.
